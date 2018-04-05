@@ -4,7 +4,7 @@ IncludeTemplateLangFile(__FILE__);
 ?>
 <!DOCTYPE html>
 <html xmlns="http://www.w3.org/1999/xhtml" xml:lang="ru" lang="ru">
-<head>
+<head><?$APPLICATION->ShowProperty('canonical')?>
 <meta http-equiv="X-UA-Compatible" content="IE=edge" />
 <?$APPLICATION->ShowHead();?>
 <link href="<?=SITE_TEMPLATE_PATH?>/common.css" type="text/css" rel="stylesheet" />
