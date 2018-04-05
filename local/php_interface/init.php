@@ -1,6 +1,7 @@
 <?
 ///const
 define('PRODUCTS_IBLOCK_ID', 2);
+define('METATAGS_IBLOCK_ID', 6);
 define('CONTENT_EDITORS_GROUP_ID', 5);
 
 ////////include

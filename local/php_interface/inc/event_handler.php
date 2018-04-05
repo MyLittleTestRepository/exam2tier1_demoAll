@@ -2,6 +2,7 @@
 AddEventHandler('iblock', 'OnBeforeIBlockElementUpdate', Array("EventHandler", "cancel_production_deactivate"));
 AddEventHandler('main', 'OnBeforeEventSend', Array("EventHandler", "set_author_from_feedback_form"));
 AddEventHandler('main', 'OnBuildGlobalMenu', Array("EventHandler", "simple_content_editors_admin_menu"));
+AddEventHandler('main', 'OnEpilog', Array("EventHandler", "set_additional_page_property"));
 
 class EventHandler
 {
@@ -78,5 +79,31 @@ class EventHandler
 				unset($aModuleMenu[$key]);
 
 		unset($val);
+	}
+
+	function set_additional_page_property()
+	{
+
+		if (!CModule::IncludeModule('iblock'))
+			return;
+
+		$Res = CIBlockElement::GetList(false,
+		                               ['IBLOCK_ID' => METATAGS_IBLOCK_ID,
+		                                'ACTIVE'    => 'Y',
+		                                'NAME'      => htmlspecialchars($_SERVER['REQUEST_URI'])],
+		                               false,
+		                               false,
+		                               ['PROPERTY_TITLE',
+		                                'PROPERTY_DESCRIPTION']);
+
+		if (!$Res->SelectedRowsCount())
+			return;
+
+		$Res = $Res->Fetch();
+
+		global $APPLICATION;
+
+		$APPLICATION->SetPageProperty('title', $Res['PROPERTY_TITLE_VALUE']);
+		$APPLICATION->SetPageProperty('description', $Res['PROPERTY_DESCRIPTION_VALUE']);
 	}
 }
