@@ -1,6 +1,6 @@
 <?
 ///const
-//define('CONTENT_ED_GID', 5);
+define('PRODUCTS_IBLOCK_ID', 2);
 
 ////////include
 $arInc = ['event_handler'];
@@ -17,7 +17,7 @@ unset($arInc);
 
 function mydebug(&$string, $die = false)
 {
-	file_put_contents($_SERVER['DOCUMENT_ROOT'] . '/debug.txt', mydump($string));
+	file_put_contents($_SERVER['DOCUMENT_ROOT'] . '/debug.txt', date('H:i:s').PHP_EOL.mydump($string));
 	if ($die)
 		die();
 }
