@@ -1,6 +1,6 @@
 <?
 AddEventHandler('iblock', 'OnBeforeIBlockElementUpdate', Array("EventHandler", "cancel_production_deactivate"));
-
+AddEventHandler('main', 'OnBeforeEventSend', Array("EventHandler", "set_author_from_feedback_form"));
 
 class EventHandler
 {
@@ -29,5 +29,30 @@ class EventHandler
 		                                        . $item['SHOW_COUNTER']
 		                                        . ' просмотров');
 		return false;
+	}
+
+	function set_author_from_feedback_form(&$arFields, &$arTemplate)
+	{
+
+		if ($arTemplate['EVENT_NAME'] != 'FEEDBACK_FORM')
+			return;
+
+		global $USER;
+
+		$old = $arFields['AUTHOR'];
+
+		if ($USER->IsAuthorized())
+			$arFields['AUTHOR'] = 'Пользователь авторизован: '
+			                      . $USER->GetID()
+			                      . ' ('
+			                      . $USER->GetLogin()
+			                      . ') '
+			                      . $USER->GetFullName()
+			                      . ', данные из формы: '
+			                      . $arFields['AUTHOR'];
+		else
+			$arFields['AUTHOR'] = 'Пользователь не авторизован, данные из формы: ' . $arFields['AUTHOR'];
+
+		CEventLog::Log('INFO', 'FEEDBACK_AUTHOR_REPLACE', 'main', $old, $arFields['AUTHOR']);
 	}
 }
