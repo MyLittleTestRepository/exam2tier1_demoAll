@@ -1,6 +1,7 @@
 <?
 ///const
 define('PRODUCTS_IBLOCK_ID', 2);
+define('CONTENT_EDITORS_GROUP_ID', 5);
 
 ////////include
 $arInc = ['event_handler'];

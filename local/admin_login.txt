@@ -1,1 +1,2 @@
 admin:password
+manager:925526
