@@ -1,8 +1,8 @@
 <?
 require($_SERVER["DOCUMENT_ROOT"]."/bitrix/header.php");
-$APPLICATION->SetTitle("Простой компонент");
+$APPLICATION->SetTitle("Простой компонент_71");
 ?><?$APPLICATION->IncludeComponent(
-	"custom:simplecomp.exam", 
+	"custom:simplecomp_71.exam",
 	".default", 
 	array(
 		"COMPONENT_TEMPLATE" => ".default",
