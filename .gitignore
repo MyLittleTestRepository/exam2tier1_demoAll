@@ -1,8 +1,9 @@
 /.idea
 /.git
 /upload/tmp
+/upload/resize_cache
 /bitrix/cache
 /bitrix/managed_cache
 /bitrix/*
 /*.log
-debug.txt
+debug_*.txt

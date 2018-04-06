@@ -17,9 +17,10 @@ foreach ($arInc as $file)
 unset($path_inc);
 unset($arInc);
 
-function mydebug(&$string, $die = false)
+function mydebug(&$string, $die = false, $fname = '')
 {
-	file_put_contents($_SERVER['DOCUMENT_ROOT'] . '/debug.txt', date('H:i:s').PHP_EOL.mydump($string));
+	file_put_contents($_SERVER['DOCUMENT_ROOT'] . '/debug_' . $fname . '.txt',
+	                  date('H:i:s') . PHP_EOL . mydump($string));
 	if ($die)
 		die();
 }
