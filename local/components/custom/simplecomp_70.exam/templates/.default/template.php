@@ -24,4 +24,6 @@
                 <?endforeach;?>
             <?endforeach;?>
         </ul>
+    </li>
 <?endforeach;?>
+</ul>
