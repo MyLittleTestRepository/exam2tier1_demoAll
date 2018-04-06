@@ -6,9 +6,10 @@ $APPLICATION->SetTitle("Простой компонент_81");
 	".default", 
 	array(
 		"COMPONENT_TEMPLATE" => ".default",
-		"NEWS_IBLOCK_ID" => "1",
-		"NEWS_LINK_CODE" => "AUTHOR",
-		"UF_CODE" => "UF_AUTHOR_TYPE",
+		"PRODUCTS_IBLOCK_ID" => "2",
+		"PRODUCTS_LINK_CODE" => "COMPANY",
+		"PRODUCTS_URL_TEMPLATE" => "catalog_exam/#SECTION_ID#/#ELEMENT_CODE#",
+		"CLASS_IBLOCK_ID" => "7",
 		"CACHE_TYPE" => "A",
 		"CACHE_TIME" => "3600000"
 	),

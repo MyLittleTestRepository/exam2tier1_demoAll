@@ -28,7 +28,7 @@ if (!$arParams['PRODUCTS_IBLOCK_ID'] or !$arParams['PRODUCTS_LINK_CODE'] or !$ar
 if ($this->startResultCache($USER->GetGroups()))
 {
 
-	$Res = CIBlockElement::GetList(false,
+	$Res = CIBlockElement::GetList(['name', 'sort'],
 	                               ['CHECK_PERMISSIONS'                                       => 'Y',
 	                                'IBLOCK_ID'                                               => $arParams['PRODUCTS_IBLOCK_ID'],
 	                                'ACTIVE'                                                  => 'Y',
@@ -41,7 +41,8 @@ if ($this->startResultCache($USER->GetGroups()))
 	                                'PROPERTY_ARTNUMBER',
 	                                'PROPERTY_' . $arParams['PRODUCTS_LINK_CODE'] . '.NAME',
 	                                'ID',
-	                                'IBLOCK_SECTION_ID']);
+	                                'IBLOCK_SECTION_ID',
+	                                'CODE']);
 
 	if (!$Res->SelectedRowsCount())
 	{
@@ -51,10 +52,11 @@ if ($this->startResultCache($USER->GetGroups()))
 
 	while ($item = $Res->Fetch())
 	{
-		$item['DETAIL_PAGE_URL'] = str_replace(['#SITE_DIR#', '#SECTION_ID#', '#ID#'],
+		$item['DETAIL_PAGE_URL'] = str_replace(['#SITE_DIR#', '#SECTION_ID#', '#ID#', '#ELEMENT_CODE#'],
 		                                       [SITE_DIR == '/' ? '' : SITE_DIR,
 		                                        $item['IBLOCK_SECTION_ID'],
-		                                        $item['ID']],
+		                                        $item['ID'],
+		                                        $item['CODE']],
 		                                       $arParams['PRODUCTS_URL_TEMPLATE']);
 		$arResult[$arParams['PRODUCTS_LINK_CODE']][$item['PROPERTY_COMPANY_NAME']][] = $item;
 	}
@@ -68,3 +70,5 @@ if ($this->startResultCache($USER->GetGroups()))
 }
 
 $APPLICATION->SetTitle(GetMessage("COUNT") . $arResult['COUNT']);
+
+//Шаблон пути не соответствует картинке

@@ -12,7 +12,7 @@
                         <a href="<?=$item['DETAIL_PAGE_URL']?>"><?=$item['NAME']?></a> -
                         <?=$item['PROPERTY_PRICE_VALUE']?> -
                         <?=$item['PROPERTY_MATERIAL_VALUE']?> -
-                        <?=$item['PROPERTY_ARTNUMBER_VALUE']?>
+                        <?=$item['PROPERTY_ARTNUMBER_VALUE']?> (<?=$item['DETAIL_PAGE_URL']?>)
                     </li>
 				<?endforeach;?>
             </ul>
