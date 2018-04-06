@@ -24,8 +24,10 @@ unset($val);
 if (!$arParams['PRODUCTS_IBLOCK_ID'] or !$arParams['NEWS_IBLOCK_ID'] or !$arParams['NEWS_LINK_CODE'])
 	return;
 
+$force_mode = isset($_REQUEST['F']);
+
 /**@var $this CBitrixComponent */
-if ($this->startResultCache())
+if ($force_mode or $this->startResultCache())
 {
 
 	//get sections
@@ -52,10 +54,18 @@ if ($this->startResultCache())
 
 
 	//get products
+	$arFilter = ['IBLOCK_ID'         => $arParams['PRODUCTS_IBLOCK_ID'],
+	             'ACTIVE'            => 'Y',
+	             'IBLOCK_SECTION_ID' => array_keys($arResult['SECTIONS'])];
+
+	if ($force_mode)
+		array_push($arFilter,
+		           ['LOGIC' => 'OR',
+		            ['<=PROPERTY_PRICE' => 1700, '=PROPERTY_MATERIAL' => 'Дерево, ткань'],
+		            ['<PROPERTY_PRICE' => 1500, '=PROPERTY_MATERIAL' => 'Металл, пластик']]);
+
 	$Res = CIBlockElement::GetList(false,
-	                               ['IBLOCK_ID'         => $arParams['PRODUCTS_IBLOCK_ID'],
-	                                'ACTIVE'            => 'Y',
-	                                'IBLOCK_SECTION_ID' => array_keys($arResult['SECTIONS']),],
+	                               $arFilter,
 	                               false,
 	                               false,
 	                               ['ID',
