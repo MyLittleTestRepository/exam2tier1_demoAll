@@ -3,16 +3,14 @@
 <?if(empty($arResult))
     return?>
 <ul>
-	<?foreach ($arResult[$arParams['PRODUCTS_LINK_CODE']] as $firm_name => &$products):?>
+	<?foreach ($arResult['USERS'] as $uid => &$arUser):?>
         <li>
-            <b><?=$firm_name?></b>
+            [<?=$uid?>] - <?=$arUser['LOGIN']?>
             <ul>
-				<?foreach ($products as &$item):?>
+				<?foreach ($arUser['NEWS'] as $news_id):?>
                     <li>
-                        <a href="<?=$item['DETAIL_PAGE_URL']?>"><?=$item['NAME']?></a> -
-                        <?=$item['PROPERTY_PRICE_VALUE']?> -
-                        <?=$item['PROPERTY_MATERIAL_VALUE']?> -
-                        <?=$item['PROPERTY_ARTNUMBER_VALUE']?>
+                        <?=$arResult['NEWS'][$news_id]['DATE_ACTIVE_FROM']?> -
+                        <?=$arResult['NEWS'][$news_id]['NAME']?>
                     </li>
 				<?endforeach;?>
             </ul>

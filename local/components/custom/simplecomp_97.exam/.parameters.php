@@ -2,29 +2,23 @@
 if (!defined("B_PROLOG_INCLUDED") || B_PROLOG_INCLUDED!==true) die();
 $arComponentParameters = array(
 	"PARAMETERS" => array(
-		"PRODUCTS_IBLOCK_ID" => array(
+		"NEWS_IBLOCK_ID" => array(
 			'PARENT' => 'BASE',
-			"NAME" => GetMessage("SIMPLECOMP_EXAM2_CAT_IBLOCK_ID"),
+			"NAME" => GetMessage("NEWS_IBLOCK_ID"),
 			"TYPE" => "STRING",
-			'DEFAULT' => '2',
+			'DEFAULT' => '1',
 		),
-		"PRODUCTS_LINK_CODE" => array(
+		"NEWS_LINK_CODE" => array(
 			'PARENT' => 'BASE',
-			"NAME" => GetMessage("PRODUCTS_LINK_CODE"),
+			"NAME" => GetMessage("NEWS_LINK_CODE"),
 			"TYPE" => "STRING",
-			'DEFAULT' => 'COMPANY',
+			'DEFAULT' => 'AUTHOR',
 		),
-		"PRODUCTS_URL_TEMPLATE" => array(
+		"UF_CODE" => array(
 			'PARENT' => 'BASE',
-			"NAME" => GetMessage("PRODUCTS_URL_TEMPLATE"),
+			"NAME" => GetMessage("UF_CODE"),
 			"TYPE" => "STRING",
-			'DEFAULT' => '#SITE_DIR#/products/#SECTION_ID#/#ID#/',
-		),
-		"CLASS_IBLOCK_ID" => array(
-			'PARENT' => 'BASE',
-			"NAME" => GetMessage("CLASS_IBLOCK_ID"),
-			"TYPE" => "STRING",
-			'DEFAULT' => '7',
+			'DEFAULT' => 'UF_AUTHOR_TYPE',
 		),
 		'CACHE_TIME' => array('DEFAULT' => '3600000'),
 	),
