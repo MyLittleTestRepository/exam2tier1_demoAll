@@ -7,8 +7,9 @@ $APPLICATION->SetTitle("Простой компонент_71");
 	array(
 		"COMPONENT_TEMPLATE" => ".default",
 		"PRODUCTS_IBLOCK_ID" => "2",
-		"NEWS_IBLOCK_ID" => "1",
-		"NEWS_LINK_CODE" => "UF_NEWS_LINK",
+		"PRODUCTS_LINK_CODE" => "COMPANY",
+		"PRODUCTS_URL_TEMPLATE" => "#SITE_DIR#/products/#SECTION_ID#/#ID#/",
+		"CLASS_IBLOCK_ID" => "7",
 		"CACHE_TYPE" => "A",
 		"CACHE_TIME" => "3600000"
 	),

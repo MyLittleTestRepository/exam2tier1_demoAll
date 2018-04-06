@@ -8,17 +8,23 @@ $arComponentParameters = array(
 			"TYPE" => "STRING",
 			'DEFAULT' => '2',
 		),
-		"NEWS_IBLOCK_ID" => array(
+		"PRODUCTS_LINK_CODE" => array(
 			'PARENT' => 'BASE',
-			"NAME" => GetMessage("NEWS_IBLOCK_ID"),
+			"NAME" => GetMessage("PRODUCTS_LINK_CODE"),
 			"TYPE" => "STRING",
-			'DEFAULT' => '1',
+			'DEFAULT' => 'COMPANY',
 		),
-		"NEWS_LINK_CODE" => array(
+		"PRODUCTS_URL_TEMPLATE" => array(
 			'PARENT' => 'BASE',
-			"NAME" => GetMessage("NEWS_LINk_CODE"),
+			"NAME" => GetMessage("PRODUCTS_URL_TEMPLATE"),
 			"TYPE" => "STRING",
-			'DEFAULT' => 'UF_NEWS_LINK',
+			'DEFAULT' => '#SITE_DIR#/products/#SECTION_ID#/#ID#/',
+		),
+		"CLASS_IBLOCK_ID" => array(
+			'PARENT' => 'BASE',
+			"NAME" => GetMessage("CLASS_IBLOCK_ID"),
+			"TYPE" => "STRING",
+			'DEFAULT' => '7',
 		),
 		'CACHE_TIME' => array('DEFAULT' => '3600000'),
 	),

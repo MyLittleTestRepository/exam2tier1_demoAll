@@ -11,7 +11,7 @@ if (!Loader::includeModule("iblock"))
 }
 
 //clear input vars
-foreach ($arParams as $key => &$val)
+foreach ($arParams as &$val)
 	if (substr($val, 0, 1) != '~')
 	{
 		$val = trim($val);
@@ -21,72 +21,27 @@ foreach ($arParams as $key => &$val)
 unset($val);
 
 //check input vars
-if (!$arParams['PRODUCTS_IBLOCK_ID'] or !$arParams['NEWS_IBLOCK_ID'] or !$arParams['NEWS_LINK_CODE'])
+if (!$arParams['PRODUCTS_IBLOCK_ID'] or !$arParams['PRODUCTS_LINK_CODE'] or !$arParams['CLASS_IBLOCK_ID'])
 	return;
 
 /**@var $this CBitrixComponent */
-if ($this->startResultCache())
+if ($this->startResultCache($USER->GetGroups()))
 {
 
-	//get sections
-	$Res = CIBlockSection::GetList(false,
-	                               ['IBLOCK_ID'                       => $arParams['PRODUCTS_IBLOCK_ID'],
-	                                '!' . $arParams['NEWS_LINK_CODE'] => false,
-	                                'ACTIVE'                          => 'Y'],
-	                               false,
-	                               [$arParams['NEWS_LINK_CODE'], 'NAME', 'ID'],
-	                               false);
-
-	if (!$Res->SelectedRowsCount())
-	{
-		$this->abortResultCache();
-		return;
-	}
-
-	while ($sect = $Res->Fetch())
-	{
-		$arResult['SECTIONS'][$sect['ID']]['NAME'] = $sect['NAME'];
-		foreach ($sect['UF_NEWS_LINK'] as $news_id)
-			$arResult['NEWS'][$news_id]['SECTIONS_ID'][] = $sect['ID'];
-	}
-
-
-	//get products
 	$Res = CIBlockElement::GetList(false,
-	                               ['IBLOCK_ID'         => $arParams['PRODUCTS_IBLOCK_ID'],
-	                                'ACTIVE'            => 'Y',
-	                                'IBLOCK_SECTION_ID' => array_keys($arResult['SECTIONS']),],
+	                               ['CHECK_PERMISSIONS'                                       => 'Y',
+	                                'IBLOCK_ID'                                               => $arParams['PRODUCTS_IBLOCK_ID'],
+	                                'ACTIVE'                                                  => 'Y',
+	                                'PROPERTY_' . $arParams['PRODUCTS_LINK_CODE'] . '.ACTIVE' => 'Y',],
 	                               false,
 	                               false,
-	                               ['ID',
-	                                'IBLOCK_SECTION_ID',
-	                                'NAME',
+	                               ['NAME',
 	                                'PROPERTY_PRICE',
 	                                'PROPERTY_MATERIAL',
-	                                'PROPERTY_ARTNUMBER']);
-
-	if (!$Res->SelectedRowsCount())
-	{
-		$this->abortResultCache();
-		return;
-	}
-
-	$prod_count = $Res->SelectedRowsCount();
-
-	while ($item = $Res->Fetch())
-		$arResult['SECTIONS'][$item['IBLOCK_SECTION_ID']]['ITEMS'][$item['ID']] = $item;
-
-
-	//get news
-	$Res = CIBlockElement::GetList(false,
-	                               ['IBLOCK_ID' => $arParams['NEWS_IBLOCK_ID'],
-	                                'ACTIVE'    => 'Y',
-	                                'ID'        => array_keys($arResult['NEWS'])],
-	                               false,
-	                               false,
-	                               ['ID',
-	                                'NAME',
-	                                'DATE_ACTIVE_FROM']);
+	                                'PROPERTY_ARTNUMBER',
+	                                'PROPERTY_' . $arParams['PRODUCTS_LINK_CODE'] . '.NAME',
+	                                'ID',
+	                                'IBLOCK_SECTION_ID']);
 
 	if (!$Res->SelectedRowsCount())
 	{
@@ -95,11 +50,18 @@ if ($this->startResultCache())
 	}
 
 	while ($item = $Res->Fetch())
-		$arResult['NEWS'][$item['ID']]['ITEM'] = $item;
+	{
+		$item['DETAIL_PAGE_URL'] = str_replace(['#SITE_DIR#', '#SECTION_ID#', '#ID#'],
+		                                       [SITE_DIR == '/' ? '' : SITE_DIR,
+		                                        $item['IBLOCK_SECTION_ID'],
+		                                        $item['ID']],
+		                                       $arParams['PRODUCTS_URL_TEMPLATE']);
+		$arResult[$arParams['PRODUCTS_LINK_CODE']][$item['PROPERTY_COMPANY_NAME']][] = $item;
+	}
 
 
 	//end
-	$arResult['COUNT'] = $prod_count;
+	$arResult['COUNT'] = count($arResult[$arParams['PRODUCTS_LINK_CODE']]);
 	$this->setResultCacheKeys('COUNT');
 
 	$this->includeComponentTemplate();

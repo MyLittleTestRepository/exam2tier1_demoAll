@@ -3,25 +3,19 @@
 <?if(empty($arResult))
     return?>
 <ul>
-<?foreach ($arResult['NEWS'] as &$news):?>
-    <li>
-        <b><?=$news['ITEM']['NAME']?></b> - <?=$news['ITEM']['DATE_ACTIVE_FROM']?> - (
-        <?$sect_names=[]?>
-        <?foreach ($news['SECTIONS_ID'] as $sect_id):?>
-            <?$sect_names[]=$arResult['SECTIONS'][$sect_id]['NAME']?>
-        <?endforeach;?>
-        <?=implode(', ', $sect_names)?>
-        )
-        <ul>
-            <?foreach ($news['SECTIONS_ID'] as $sect_id):?>
-                <?foreach ($arResult['SECTIONS'][$sect_id]['ITEMS'] as $item):?>
-                <li>
-                    <?=$item['NAME']?> -
-	                <?=$item['PROPERTY_PRICE_VALUE']?> -
-	                <?=$item['PROPERTY_MATERIAL_VALUE']?> -
-	                <?=$item['PROPERTY_ARTNUMBER_VALUE']?>
-                </li>
-                <?endforeach;?>
-            <?endforeach;?>
-        </ul>
-<?endforeach;?>
+	<?foreach ($arResult[$arParams['PRODUCTS_LINK_CODE']] as $firm_name => &$products):?>
+        <li>
+            <b><?=$firm_name?></b>
+            <ul>
+				<?foreach ($products as &$item):?>
+                    <li>
+                        <a href="<?=$item['DETAIL_PAGE_URL']?>"><?=$item['NAME']?></a> -
+                        <?=$item['PROPERTY_PRICE_VALUE']?> -
+                        <?=$item['PROPERTY_MATERIAL_VALUE']?> -
+                        <?=$item['PROPERTY_ARTNUMBER_VALUE']?>
+                    </li>
+				<?endforeach;?>
+            </ul>
+        </li>
+	<?endforeach;?>
+</ul>
