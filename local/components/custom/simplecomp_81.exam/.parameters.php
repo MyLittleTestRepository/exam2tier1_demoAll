@@ -18,7 +18,7 @@ $arComponentParameters = array(
 			'PARENT' => 'BASE',
 			"NAME" => GetMessage("PRODUCTS_URL_TEMPLATE"),
 			"TYPE" => "STRING",
-			'DEFAULT' => '#SITE_DIR#/products/#SECTION_ID#/#ID#/',
+			'DEFAULT' => '/#SITE_DIR#/products/#SECTION_ID#/#ID#/',
 		),
 		"CLASS_IBLOCK_ID" => array(
 			'PARENT' => 'BASE',

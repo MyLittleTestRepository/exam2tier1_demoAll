@@ -39,9 +39,7 @@ if ($this->startResultCache($USER->GetGroups()))
 	                                'PROPERTY_MATERIAL',
 	                                'PROPERTY_ARTNUMBER',
 	                                'PROPERTY_' . $arParams['PRODUCTS_LINK_CODE'] . '.NAME',
-	                                'ID',
-	                                'IBLOCK_SECTION_ID',
-	                                'CODE']);
+	                                'DETAIL_PAGE_URL']);
 
 	if (!$Res->SelectedRowsCount())
 	{
@@ -49,16 +47,10 @@ if ($this->startResultCache($USER->GetGroups()))
 		return;
 	}
 
-	while ($item = $Res->Fetch())
-	{
-		$item['DETAIL_PAGE_URL'] = str_replace(['#SITE_DIR#', '#SECTION_ID#', '#ID#', '#ELEMENT_CODE#'],
-		                                       [SITE_DIR == '/' ? '' : SITE_DIR,
-		                                        $item['IBLOCK_SECTION_ID'],
-		                                        $item['ID'],
-		                                        $item['CODE']],
-		                                       $arParams['PRODUCTS_URL_TEMPLATE']);
+	$Res->SetUrlTemplates($arParams['PRODUCTS_URL_TEMPLATE']);
+
+	while ($item = $Res->GetNext())
 		$arResult[$arParams['PRODUCTS_LINK_CODE']][$item['PROPERTY_'.$arParams['PRODUCTS_LINK_CODE'].'_NAME']][] = $item;
-	}
 
 
 	//end
