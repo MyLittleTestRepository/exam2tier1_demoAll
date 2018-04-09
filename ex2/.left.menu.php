@@ -8,6 +8,20 @@ $aMenuLinks = Array(
 		"" 
 	),
 	Array(
+		"Простой компонент_49",
+		"/ex2/simplecomp_49/",
+		Array(),
+		Array(),
+		""
+	),
+	Array(
+		"Простой компонент_58",
+		"/ex2/simplecomp_58/",
+		Array(),
+		Array(),
+		""
+	),
+	Array(
 		"Простой компонент_70",
 		"/ex2/simplecomp_70/",
 		Array(), 
@@ -22,13 +36,6 @@ $aMenuLinks = Array(
 		""
 	),
 	Array(
-		"Простой компонент_97",
-		"/ex2/simplecomp_97/",
-		Array(),
-		Array(),
-		""
-	),
-	Array(
 		"Простой компонент_81",
 		"/ex2/simplecomp_81/",
 		Array(),
@@ -36,15 +43,15 @@ $aMenuLinks = Array(
 		""
 	),
 	Array(
-		"Простой компонент_49",
-		"/ex2/simplecomp_49/",
+		"Простой компонент_82",
+		"/ex2/simplecomp_82/",
 		Array(),
 		Array(),
 		""
 	),
 	Array(
-		"Простой компонент_58",
-		"/ex2/simplecomp_58/",
+		"Простой компонент_97",
+		"/ex2/simplecomp_97/",
 		Array(),
 		Array(),
 		""
