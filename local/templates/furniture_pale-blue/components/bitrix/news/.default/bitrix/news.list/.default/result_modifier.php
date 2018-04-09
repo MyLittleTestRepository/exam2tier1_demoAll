@@ -4,5 +4,5 @@
 if ($arParams["SET_SPECIALDATE"] == "Y")
 {
 	$arResult['SPECIALDATE'] = $arResult['ITEMS'][0]['ACTIVE_FROM'];
-	$this->__component->setResultCacheKeys('SPECIALDATE');
+	$this->__component->setResultCacheKeys(['SPECIALDATE']);
 }

@@ -99,7 +99,7 @@ if ($this->startResultCache())
 
 	//end
 	$arResult['COUNT'] = $prod_count;
-	$this->setResultCacheKeys('COUNT');
+	$this->setResultCacheKeys(['COUNT']);
 
 	$this->includeComponentTemplate();
 }

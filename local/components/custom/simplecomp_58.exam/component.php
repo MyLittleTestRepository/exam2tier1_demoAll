@@ -132,7 +132,7 @@ if ($this->startResultCache($my_id))
 
 	//end
 	$arResult['COUNT'] = count($arResult['NEWS']);
-	$this->setResultCacheKeys('COUNT');
+	$this->setResultCacheKeys(['COUNT']);
 
 	$this->includeComponentTemplate();
 }

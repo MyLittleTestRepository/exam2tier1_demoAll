@@ -68,7 +68,7 @@ if ($this->startResultCache($USER->GetGroups()))
 
 	//end
 	$arResult['COUNT'] = count($arResult[$arParams['PRODUCTS_LINK_CODE']]);
-	$this->setResultCacheKeys('COUNT', 'MAX', 'MIN');
+	$this->setResultCacheKeys(['COUNT', 'MAX', 'MIN']);
 
 	$this->includeComponentTemplate();
 }
