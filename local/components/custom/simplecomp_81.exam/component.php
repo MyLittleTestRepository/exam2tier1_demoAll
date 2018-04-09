@@ -58,7 +58,7 @@ if ($this->startResultCache($USER->GetGroups()))
 		                                        $item['ID'],
 		                                        $item['CODE']],
 		                                       $arParams['PRODUCTS_URL_TEMPLATE']);
-		$arResult[$arParams['PRODUCTS_LINK_CODE']][$item['PROPERTY_COMPANY_NAME']][] = $item;
+		$arResult[$arParams['PRODUCTS_LINK_CODE']][$item['PROPERTY_'.$arParams['PRODUCTS_LINK_CODE'].'_NAME']][] = $item;
 	}
 
 

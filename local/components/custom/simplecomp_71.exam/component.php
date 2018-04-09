@@ -56,7 +56,8 @@ if ($this->startResultCache($USER->GetGroups()))
 		                                        $item['IBLOCK_SECTION_ID'],
 		                                        $item['ID']],
 		                                       $arParams['PRODUCTS_URL_TEMPLATE']);
-		$arResult[$arParams['PRODUCTS_LINK_CODE']][$item['PROPERTY_COMPANY_NAME']][] = $item;
+		$arResult[$arParams['PRODUCTS_LINK_CODE']][$item['PROPERTY_' . $arParams['PRODUCTS_LINK_CODE'].'_NAME']][] =
+			$item;
 	}
 
 
