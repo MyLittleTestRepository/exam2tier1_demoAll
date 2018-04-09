@@ -3,11 +3,11 @@
 <?if(empty($arResult))
     return?>
 <ul>
-	<?foreach ($arResult[$arParams['PRODUCTS_LINK_CODE']] as $firm_name => &$products):?>
+	<?foreach ($arResult[$arParams['PRODUCTS_LINK_CODE']] as $firm_name => $products):?>
         <li>
             <b><?=$firm_name?></b>
             <ul>
-				<?foreach ($products as &$item):?>
+				<?foreach ($products as $item):?>
                     <li>
                         <a href="<?=$item['DETAIL_PAGE_URL']?>"><?=$item['NAME']?></a> -
                         <?=$item['PROPERTY_PRICE_VALUE']?> -

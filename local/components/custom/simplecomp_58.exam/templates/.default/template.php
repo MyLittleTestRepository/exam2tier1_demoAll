@@ -3,7 +3,7 @@
 <?if(empty($arResult))
     return?>
 <ul>
-	<?foreach ($arResult['USERS'] as $uid => &$arUser):?>
+	<?foreach ($arResult['USERS'] as $uid => $arUser):?>
         <li>
             [<?=$uid?>] - <?=$arUser['LOGIN']?>
             <ul>

@@ -3,7 +3,7 @@
 <?if(empty($arResult))
     return?>
 <ul>
-<?foreach ($arResult['NEWS'] as &$news):?>
+<?foreach ($arResult['NEWS'] as $news):?>
     <li>
         <b><?=$news['ITEM']['NAME']?></b> - <?=$news['ITEM']['DATE_ACTIVE_FROM']?> - (
         <?$sect_names=[]?>

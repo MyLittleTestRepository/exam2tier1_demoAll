@@ -14,14 +14,13 @@ if (!Loader::includeModule("iblock"))
 }
 
 //clear input vars
-foreach ($arParams as &$val)
+foreach ($arParams as $key=>$val)
 	if (substr($val, 0, 1) != '~')
 	{
-		$val = trim($val);
+		$arParams[$key] = trim($val);
 		if (is_numeric($val))
-			$val = intval($val);
+			$arParams[$key] = intval($val);
 	};
-unset($val);
 
 //check input vars
 if (!$arParams['NEWS_IBLOCK_ID'] or !$arParams['NEWS_LINK_CODE'] or !$arParams['UF_CODE'])
