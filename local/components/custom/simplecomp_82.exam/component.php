@@ -11,7 +11,7 @@ if (!Loader::includeModule("iblock"))
 }
 
 //clear input vars
-foreach ($arParams as $key=>$val)
+foreach ($arParams as $key => $val)
 	if (substr($val, 0, 1) != '~')
 	{
 		$arParams[$key] = trim($val);
@@ -49,17 +49,28 @@ if ($this->startResultCache($USER->GetGroups()))
 
 	$Res->SetUrlTemplates($arParams['PRODUCTS_URL_TEMPLATE']);
 
+	$arResult['MAX'] = null;
+	$arResult['MIN'] = null;
+
 	while ($item = $Res->GetNext())
-		$arResult[$arParams['PRODUCTS_LINK_CODE']][$item['PROPERTY_'.$arParams['PRODUCTS_LINK_CODE'].'_NAME']][] = $item;
+	{
+
+		if (is_null($arResult['MIN']))
+			$arResult['MIN'] = $item['PROPERTY_PRICE_VALUE'];
+
+		$arResult['MAX'] = max($arResult['MAX'], $item['PROPERTY_PRICE_VALUE']);
+		$arResult['MIN'] = min($arResult['MIN'], $item['PROPERTY_PRICE_VALUE']);
+
+		$arResult[$arParams['PRODUCTS_LINK_CODE']][$item['PROPERTY_' . $arParams['PRODUCTS_LINK_CODE'] . '_NAME']][]
+			= $item;
+	}
 
 
 	//end
 	$arResult['COUNT'] = count($arResult[$arParams['PRODUCTS_LINK_CODE']]);
-	$this->setResultCacheKeys('COUNT');
+	$this->setResultCacheKeys('COUNT', 'MAX', 'MIN');
 
 	$this->includeComponentTemplate();
 }
 
 $APPLICATION->SetTitle(GetMessage("COUNT") . $arResult['COUNT']);
-
-//Шаблон пути не соответствует картинке
