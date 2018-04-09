@@ -47,7 +47,7 @@ if ($force_mode or $this->startResultCache())
 	while ($sect = $Res->Fetch())
 	{
 		$arResult['SECTIONS'][$sect['ID']]['NAME'] = $sect['NAME'];
-		foreach ($sect['UF_NEWS_LINK'] as $news_id)
+		foreach ($sect[$arParams['NEWS_LINK_CODE']] as $news_id)
 			$arResult['NEWS'][$news_id]['SECTIONS_ID'][] = $sect['ID'];
 	}
 
