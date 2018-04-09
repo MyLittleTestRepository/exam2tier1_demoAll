@@ -79,7 +79,8 @@ if ($this->startResultCache($my_id))
 	                               ['ID',
 	                                'NAME',
 	                                'DATE_ACTIVE_FROM',
-	                                'PROPERTY_' . $arParams['NEWS_LINK_CODE']]);
+	                                'PROPERTY_' . $arParams['NEWS_LINK_CODE'],
+	                                'IBLOCK_ID']);
 
 	if (!$Res->SelectedRowsCount())
 	{
@@ -106,7 +107,20 @@ if ($this->startResultCache($my_id))
 			continue;
 		}
 
-		$arResult['USERS'][$news[$prop_value]]['NEWS'][] = $news_id; //set link user=news
+		//hermitage
+		$arButtons = CIBlock::GetPanelButtons(
+			$news["IBLOCK_ID"],
+			$news["ID"],
+			0,
+			array("SECTION_BUTTONS"=>true, "SESSID"=>false)
+		);
+
+		$news["ADD_LINK"] = $arButtons["edit"]["add_element"]["ACTION_URL"];
+		$news["EDIT_LINK"] = $arButtons["edit"]["edit_element"]["ACTION_URL"];
+		$news["DELETE_LINK"] = $arButtons["edit"]["delete_element"]["ACTION_URL"];
+
+		//set link user=news
+		$arResult['USERS'][$news[$prop_value]]['NEWS'][] = $news_id;
 
 		unset($news[$prop_value]);
 		unset($news[$prop_id]);
