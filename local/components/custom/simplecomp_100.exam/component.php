@@ -137,6 +137,12 @@ if ($this->startResultCache($my_id))
 	$this->includeComponentTemplate();
 }
 
+if ($APPLICATION->GetShowIncludeAreas())
+	$this->AddIncludeAreaIcons([["TITLE"          => GetMessage("NEWS_LIST"),
+	                             "URL"            => '/bitrix/admin/'
+	                                                 . CIBlock::GetAdminElementListLink($arParams['NEWS_IBLOCK_ID']),
+	                             "IN_PARAMS_MENU" => true]]);
+
 $APPLICATION->SetTitle(GetMessage("COUNT") . $arResult['COUNT']);
 
 /*::::::Новости, в которых в авторстве присутствует текущий пользователь, не выводятся у других
