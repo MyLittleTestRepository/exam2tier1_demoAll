@@ -1,6 +1,13 @@
 <?
 $aMenuLinks = Array(
 	Array(
+		"Второй сайт",
+		"/ex2/site2/",
+		Array(),
+		Array(),
+		""
+	),
+	Array(
 		"Оценка производительности", 
 		"/ex2/time_control/", 
 		Array(), 

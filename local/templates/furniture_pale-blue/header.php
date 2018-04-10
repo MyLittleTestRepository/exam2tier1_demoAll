@@ -124,7 +124,26 @@ $APPLICATION->IncludeFile(
 ?>
 					</div>
 				</div>
-				
+
+                <div class="content-block">
+                    <div class="content-block-inner">
+                        <h3><?=GetMessage('CFT_LANG_CANGE')?></h3>
+						<?$APPLICATION->IncludeComponent(
+							"bitrix:main.site.selector",
+							"lang_selector",
+							array(
+								"CACHE_TIME" => "3600",
+								"CACHE_TYPE" => "A",
+								"SITE_LIST" => array(
+									0 => "*all*",
+								),
+								"COMPONENT_TEMPLATE" => "lang_selector"
+							),
+							false
+						);?>
+                    </div>
+                </div>
+
 				<div class="content-block">
 					<div class="content-block-inner">
 						
