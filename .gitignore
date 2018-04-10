@@ -7,3 +7,4 @@
 /bitrix/*
 /*.log
 debug_*.txt
+*test.php

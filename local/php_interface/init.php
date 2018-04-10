@@ -6,7 +6,8 @@ define('METATAGS_IBLOCK_ID', 6);
 define('CONTENT_EDITORS_GROUP_ID', 5);
 
 ////////include
-$arInc = ['event_handler'];
+$arInc = ['event_handler',
+          'agents'];
 
 
 foreach ($arInc as $file)
