@@ -49,9 +49,11 @@ if ($this->startResultCache(false, $USER->GetGroups()))
 
 	$Res->SetUrlTemplates($arParams['PRODUCTS_URL_TEMPLATE']);
 
+	$GLOBALS['CACHE_MANAGER']->RegisterTag("iblock_id_" . SERVICES_IBLOCK_ID);
+
 	while ($item = $Res->GetNext())
-		$arResult[$arParams['PRODUCTS_LINK_CODE']][$item['PROPERTY_' . $arParams['PRODUCTS_LINK_CODE'].'_NAME']][] =
-			$item;
+		$arResult[$arParams['PRODUCTS_LINK_CODE']][$item['PROPERTY_' . $arParams['PRODUCTS_LINK_CODE'] . '_NAME']][]
+			= $item;
 
 
 	//end

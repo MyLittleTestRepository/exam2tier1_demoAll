@@ -2,6 +2,7 @@
 <p><b><?=GetMessage("SIMPLECOMP_EXAM2_CAT_TITLE")?> :</b></p>
 <?if(empty($arResult))
     return?>
+Время кэша: <?=date('H:i:s')?>
 <ul>
 	<?foreach ($arResult[$arParams['PRODUCTS_LINK_CODE']] as $firm_name => $products):?>
         <li>
