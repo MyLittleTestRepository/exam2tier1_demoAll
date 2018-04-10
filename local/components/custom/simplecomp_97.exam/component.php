@@ -29,7 +29,7 @@ if (!$arParams['NEWS_IBLOCK_ID'] or !$arParams['NEWS_LINK_CODE'] or !$arParams['
 $my_id = $USER->GetID();
 
 /**@var $this CBitrixComponent */
-if ($this->startResultCache($my_id))
+if ($this->startResultCache(false, $my_id))
 {
 
 	//get type for this user

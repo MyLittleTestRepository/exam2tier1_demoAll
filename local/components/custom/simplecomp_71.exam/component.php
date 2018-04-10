@@ -24,7 +24,7 @@ if (!$arParams['PRODUCTS_IBLOCK_ID'] or !$arParams['PRODUCTS_LINK_CODE'] or !$ar
 	return;
 
 /**@var $this CBitrixComponent */
-if ($this->startResultCache($USER->GetGroups()))
+if ($this->startResultCache(false, $USER->GetGroups()))
 {
 
 	$Res = CIBlockElement::GetList(false,
