@@ -2,3 +2,4 @@
 <?
 //Значения переменных:
 ?>
+<pre><?var_dump($arResult["VARIABLES"])?></pre>
