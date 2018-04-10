@@ -23,11 +23,35 @@ foreach ($arParams as $key => $val)
 if (!$arParams['PRODUCTS_IBLOCK_ID'] or !$arParams['NEWS_IBLOCK_ID'] or !$arParams['NEWS_LINK_CODE'])
 	return;
 
+//пагинация
+if ($arParams['PAGE_SIZE'] > 0)
+{
+	CPageOption::SetOptionString("main", "nav_page_in_session", "N");
+	$arNavParams = array("nPageSize"          => $arParams["PAGE_SIZE"],
+	                     "bDescPageNumbering" => false,
+	                     "bShowAll"           => false);
+	$arNavigation = CDBResult::GetNavParams($arNavParams);
+	//формируем айди кэша
+	$cacheID = array_merge($arNavigation, $arNavParams);
+}
+else
+{
+	$arNavParams = false;
+	$arNavigation = '';
+	$cacheID = '';
+}
+
 /**@var $this CBitrixComponent */
-if ($this->startResultCache())
+if ($this->startResultCache(false, $cacheID))
 {
 
-	//get sections
+	//правильно было бы запросить классификаторы, а по ним вычислить секции, и собрать элементы с них
+	//но в классификаторах нет никакой информации о привязанных к ним секциях, привязка хранится в секциях
+	//поэтому сначала соберем классификаторы из секций, а по ним уже будем запрашивать списки элементов
+
+	//запрашиваем все секции с непустым классификатором
+	//выдаются все секции, в т.ч. лишние при пагинации
+	//просто получаем список классификаторов
 	$Res = CIBlockSection::GetList(false,
 	                               ['IBLOCK_ID'                       => $arParams['PRODUCTS_IBLOCK_ID'],
 	                                '!' . $arParams['NEWS_LINK_CODE'] => false,
@@ -44,17 +68,82 @@ if ($this->startResultCache())
 
 	while ($sect = $Res->Fetch())
 	{
+		//вносим в массив имена секций
 		$arResult['SECTIONS'][$sect['ID']]['NAME'] = $sect['NAME'];
-		foreach ($sect['UF_NEWS_LINK'] as $news_id)
+		//создаем линки с новостей на секцию
+		foreach ($sect[$arParams['NEWS_LINK_CODE']] as $news_id)
 			$arResult['NEWS'][$news_id]['SECTIONS_ID'][] = $sect['ID'];
 	}
 
+	//получаем айдишники классификаторов
+	$arNewsIds = array_keys($arResult['NEWS']);
 
-	//get products
+
+	//запрашиваем классификаторы
+	//с учетом пагинации
+	$Res = CIBlockElement::GetList(false,
+	                               ['IBLOCK_ID' => $arParams['NEWS_IBLOCK_ID'],
+	                                'ACTIVE'    => 'Y',
+	                                'ID'        => $arNewsIds],
+	                               false,
+	                               $arNavParams,
+	                               ['ID',
+	                                'NAME',
+	                                'DATE_ACTIVE_FROM']);
+
+	if (!$Res->SelectedRowsCount())
+	{
+		$this->abortResultCache();
+		return;
+	}
+
+	if ($arParams['PAGE_SIZE'] > 0)
+	{
+		//ограничиваем выдачу
+		$Res->NavStart($arParams['PAGE_SIZE']);
+		//сохраняем пагинатор
+		$arResult["NAV_STRING"] = $Res->GetPageNavStringEx($navComponentObject, GetMessage("NEWS"));
+	}
+
+	//собираем из выдачи новости, и привязанные к ним секции
+	$arSectIds = [];
+	$arNewsIds = [];
+	while ($item = $Res->Fetch())
+	{
+		//вносим в массив новости
+		$arResult['NEWS'][$item['ID']]['ITEM'] = $item;
+
+		//собираем айдишники
+		$arNewsIds[] = $item['ID'];
+		foreach ($arResult['NEWS'][$item['ID']]['SECTIONS_ID'] as $sectId)
+			$arSectIds[] = $sectId;
+	}
+	//избавляемся от дублей
+	$arNewsIds = array_unique($arNewsIds);
+	$arSectIds = array_unique($arSectIds);
+
+	//пагинация ломает нам массивы, часть из них неполные
+	//секций запрошено больше, чем будет выведено,
+	//часть секций содержали линки на классификаторы, которые мы не запрашивали из бд из-за ограничения пагинации
+	//все это сейчас в массивах, и ломает рендеринг
+	//поэтому подчищаем массивы, удаляем лишние секции и пустые новости
+	if ($arParams['PAGE_SIZE'] > 0)
+	{
+		foreach ($arResult['NEWS'] as $id => $val)
+			if (!in_array($id, $arNewsIds))
+				unset($arResult['NEWS'][$id]);
+
+		foreach ($arResult['SECTIONS'] as $id => $val)
+			if (!in_array($id, $arSectIds))
+				unset($arResult['SECTIONS'][$id]);
+	}
+
+
+	//запрашиваем список элементов по оставшимся секциям
 	$Res = CIBlockElement::GetList(false,
 	                               ['IBLOCK_ID'         => $arParams['PRODUCTS_IBLOCK_ID'],
 	                                'ACTIVE'            => 'Y',
-	                                'IBLOCK_SECTION_ID' => array_keys($arResult['SECTIONS']),],
+	                                'IBLOCK_SECTION_ID' => $arSectIds],
 	                               false,
 	                               false,
 	                               ['ID',
@@ -70,31 +159,12 @@ if ($this->startResultCache())
 		return;
 	}
 
+	//вычисляем количество элементов
 	$prod_count = $Res->SelectedRowsCount();
 
+	//заполняем массивы
 	while ($item = $Res->Fetch())
 		$arResult['SECTIONS'][$item['IBLOCK_SECTION_ID']]['ITEMS'][$item['ID']] = $item;
-
-
-	//get news
-	$Res = CIBlockElement::GetList(false,
-	                               ['IBLOCK_ID' => $arParams['NEWS_IBLOCK_ID'],
-	                                'ACTIVE'    => 'Y',
-	                                'ID'        => array_keys($arResult['NEWS'])],
-	                               false,
-	                               false,
-	                               ['ID',
-	                                'NAME',
-	                                'DATE_ACTIVE_FROM']);
-
-	if (!$Res->SelectedRowsCount())
-	{
-		$this->abortResultCache();
-		return;
-	}
-
-	while ($item = $Res->Fetch())
-		$arResult['NEWS'][$item['ID']]['ITEM'] = $item;
 
 
 	//end
@@ -105,3 +175,6 @@ if ($this->startResultCache())
 }
 
 $APPLICATION->SetTitle(GetMessage("COUNT") . $arResult['COUNT']);
+
+//в задании нет ничего о счетчике новостей, поэтому его не трогаем
+//хотя он пострадал - теперь выдает количество элементов для конкретной страницы

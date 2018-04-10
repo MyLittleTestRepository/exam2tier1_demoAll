@@ -20,6 +20,12 @@ $arComponentParameters = array(
 			"TYPE" => "STRING",
 			'DEFAULT' => 'UF_NEWS_LINK',
 		),
+		"PAGE_SIZE" => array(
+			'PARENT' => 'BASE',
+			"NAME" => GetMessage("PAGE_SIZE"),
+			"TYPE" => "STRING",
+			'DEFAULT' => '1',
+		),
 		'CACHE_TIME' => array('DEFAULT' => '3600000'),
 	),
 );

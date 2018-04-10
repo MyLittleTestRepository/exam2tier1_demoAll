@@ -2,6 +2,7 @@
 <p><b><?=GetMessage("SIMPLECOMP_EXAM2_CAT_TITLE")?> :</b></p>
 <?if(empty($arResult))
     return?>
+Время кэша: <?=date('H:i:s')?>
 <ul>
 <?foreach ($arResult['NEWS'] as $news):?>
     <li>
@@ -27,3 +28,4 @@
     </li>
 <?endforeach;?>
 </ul>
+    <br /><?=$arResult["NAV_STRING"]?>
