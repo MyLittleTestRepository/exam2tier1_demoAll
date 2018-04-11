@@ -66,7 +66,7 @@ class EventHandler
 		if ($USER->IsAdmin()) //if no admin
 			return;
 
-		if (!in_array(CONTENT_EDITORS_GROUP_ID, explode(',', $USER->GetGroups()))) //if content editor
+		if (!CSite::InGroup([CONTENT_EDITORS_GROUP_ID])) //if content editor
 			return;
 
 		//unset menu
