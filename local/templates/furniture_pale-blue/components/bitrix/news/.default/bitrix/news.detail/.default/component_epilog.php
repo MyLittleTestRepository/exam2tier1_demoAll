@@ -2,4 +2,4 @@
 	die();
 
 if ($arResult['CANONICAL_URL'])
-	$APPLICATION->SetPageProperty('canonical', '<link rel="canonical" href="' . $arResult['CANONICAL_URL'] . '">');
+	$APPLICATION->SetPageProperty('canonical', $arResult['CANONICAL_URL']);
