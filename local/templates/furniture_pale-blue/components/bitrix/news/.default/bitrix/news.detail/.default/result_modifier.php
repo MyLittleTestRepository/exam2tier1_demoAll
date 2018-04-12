@@ -12,3 +12,9 @@ if ($arParams["CANONICAL_ID"] and CModule::IncludeModule('iblock'))
 	$arResult['CANONICAL_URL'] = $Res->Fetch()['NAME'];
 	$this->__component->setResultCacheKeys(['CANONICAL_URL']);
 }
+
+//GET-url
+if($arParams['AJAX_REPORT']=='Y')//устанавливаем ссылку в зависимости от режима
+	$arResult['REPORT_URL'] = 'javascript:void(0)';
+else
+	$arResult['REPORT_URL'] = $APPLICATION->GetCurPageParam('report',['report']);

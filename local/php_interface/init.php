@@ -3,6 +3,7 @@
 define('PRODUCTS_IBLOCK_ID', 2);
 define('SERVICES_IBLOCK_ID', 3);
 define('METATAGS_IBLOCK_ID', 6);
+define('NEWS_REPORT_IBLOCK_ID', 8);
 define('CONTENT_EDITORS_GROUP_ID', 5);
 
 ////////include

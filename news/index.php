@@ -2,6 +2,7 @@
 require($_SERVER["DOCUMENT_ROOT"]."/bitrix/header.php");
 $APPLICATION->SetTitle("Новости");
 ?><?$APPLICATION->IncludeComponent("bitrix:news", ".default", array(
+	"AJAX_REPORT" => "Y",
 	"CANONICAL_ID" => "5",
 	"SET_SPECIALDATE" => "Y",
 	"IBLOCK_TYPE" => "news",

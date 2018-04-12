@@ -9,7 +9,9 @@
 	<?if($arParams["DISPLAY_NAME"]!="N" && $arResult["NAME"]):?>
 		<h3><?=$arResult["NAME"]?></h3>
 	<?endif;?>
-	<div class="news-detail">
+    <a id='report' href="<?=$arResult['REPORT_URL']?>"><?=GetMessage("REPORT") //ссылка?></a>
+    <a id='report_status' hidden style="color: #00AC31"><?=GetMessage("REPORT_Y") //добавим скрытое поле?></a>
+    <div class="news-detail">
 	<?if($arParams["DISPLAY_PREVIEW_TEXT"]!="N" && $arResult["FIELDS"]["PREVIEW_TEXT"]):?>
 		<p><?=$arResult["FIELDS"]["PREVIEW_TEXT"];unset($arResult["FIELDS"]["PREVIEW_TEXT"]);?></p>
 	<?endif;?>
