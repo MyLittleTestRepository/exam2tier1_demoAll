@@ -20,6 +20,7 @@ foreach ($arInc as $file)
 unset($path_inc);
 unset($arInc);
 
+//отладочная функция, пишет в файл /debug_$fname.txt массивы и переменные
 function mydebug(&$string, $die = false, $fname = '')
 {
 	file_put_contents($_SERVER['DOCUMENT_ROOT'] . '/debug_' . $fname . '.txt',
